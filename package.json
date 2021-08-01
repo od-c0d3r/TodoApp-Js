@@ -1,0 +1,29 @@
+{
+  "name": "another-todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --mode=production",
+    "watch": "webpack --progress --watch",
+    "server": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/od-c0d3r/another-todo-app.git"
+  },
+  "author": "Omar R.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/od-c0d3r/another-todo-app/issues"
+  },
+  "homepage": "https://github.com/od-c0d3r/another-todo-app#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.9",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
