@@ -25,46 +25,76 @@ var Project = /*#__PURE__*/function () {
   _createClass(Project, [{
     key: "addTodo",
     value: function addTodo(todoObj) {
-      this.todos.push(todoObj);
+      return this.todos.push(todoObj);
     }
-  }], [{
-    key: "showProjects",
-    value: function showProjects() {
-      console.log(projects);
+  }, {
+    key: "removeTodo",
+    value: function removeTodo(todoObj) {
+      return this.todos.splice(this.todos.indexOf[todoObj], 1);
+    }
+  }, {
+    key: "updateProject",
+    value: function updateProject(newName) {
+      return this.name = newName;
+    }
+  }, {
+    key: "deleteProject",
+    value: function deleteProject() {
+      return projects.splice(projects.indexOf(this), 1);
     }
   }]);
 
   return Project;
 }();
 
-var Todo = function Todo(title, description, dueDate, priority) {
-  _classCallCheck(this, Todo);
+var Todo = /*#__PURE__*/function () {
+  function Todo(title, description, dueDate, priority) {
+    _classCallCheck(this, Todo);
 
-  this.title = title;
-  this.description = description;
-  this.dueDate = dueDate;
-  this.priority = priority;
-};
+    this.title = title;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.priority = priority;
+  }
 
+  _createClass(Todo, [{
+    key: "updateTodo",
+    value: function updateTodo(title, description, dueDate, priority) {
+      this.title = title;
+      this.description = description;
+      this.dueDate = dueDate;
+      this.priority = priority;
+    }
+  }]);
+
+  return Todo;
+}();
+
+var proj1todo1 = new Todo("Clean the room", "move the clothes to the lundry, remove the cups, make the bed", "Today", 5);
+var project0 = new Project('Default');
 var project1 = new Project('home');
 var project2 = new Project('work');
 var project3 = new Project('trip');
+project2.deleteProject();
 console.log(projects);
-project1.addTodo("Clean the room");
-project1.addTodo("Wash the deshes");
-project1.addTodo("Buy Milk");
-console.log(project1.name);
-console.log(project1.todos);
-project2.addTodo("Clean the room");
-project2.addTodo("Wash the deshes");
-project2.addTodo("Buy Milk");
-console.log(project2.name);
-console.log(project2.todos);
-project3.addTodo("Clean the room");
-project3.addTodo("Wash the deshes");
-project3.addTodo("Buy Milk");
-console.log(project3.name);
-console.log(project3.todos);
+projects[0].addTodo(proj1todo1);
+projects[0].addTodo("Wash the deshes");
+projects[0].addTodo("Buy Milk");
+console.log(projects[0].name);
+console.log(projects[0].todos);
+projects[0].removeTodo(proj1todo1);
+console.log(projects[0].todos);
+projects[1].addTodo("Clean the room");
+projects[1].addTodo("Wash the deshes");
+projects[1].addTodo("Buy Milk");
+console.log(projects[1].name);
+console.log(projects[1].todos);
+var project4 = new Project('italy');
+projects[2].addTodo("Clean the room");
+projects[2].addTodo("Wash the deshes");
+projects[2].addTodo("Buy Milk");
+console.log(projects[2].name);
+console.log(projects[2].todos);
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map
