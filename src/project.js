@@ -13,8 +13,8 @@ export default class Project {
         return this.todos.push(todoObj)
     };
     
-    removeTodo(todoObj) {
-        return this.todos.splice(this.todos.indexOf[todoObj], 1);
+    removeTodo(currentIndex) {
+        return this.todos.splice(currentIndex, 1);
     };
 
     updateProject(newName) {
@@ -87,10 +87,16 @@ export default class Project {
     
         for (let todo of project.todos) {
             const todoItem = document.createElement('li');
-            todoItem.className = 'todoItem';
+            todoItem.classList.add("todoItem");
+            const todoDeleteBtn = document.createElement('button');
+            todoDeleteBtn.className = 'deleBtn';
+            todoDeleteBtn.id = `${todo.title}`
+            todoDeleteBtn.innerHTML = '❌';
             todoItem.innerHTML = todo.title;
-            todosList.innerHTML += todoItem.outerHTML;
+
+            todosList.append(todoItem,todoDeleteBtn);
         };
+
         todoScreen.innerHTML += todosList.outerHTML
     
         const newAddbtn2 = document.createElement('button');
@@ -104,9 +110,9 @@ export default class Project {
             newAddbtn2.className = 'd-none';
             Project.addTodoFrm(project);
         });
+
     
         const todosListeners = document.querySelectorAll('.todoItem');
-        console.log(todosListeners);
     
         for (let todoHTML of todosListeners) {
             for (let todoObj of project.todos) {
@@ -115,7 +121,17 @@ export default class Project {
                 }
             }
         }
-    
+
+        const todoDeleteBtns = document.querySelectorAll('.deleBtn');
+
+        todoDeleteBtns.forEach(function(todoDeleteBtn, currentIndex) {
+            todoDeleteBtn.addEventListener('click', () => {
+                project.removeTodo(currentIndex);
+                Project.showTodos(project);
+            });  
+          }
+        );
+        
         return todoScreen
     };
 };

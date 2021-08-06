@@ -117,7 +117,7 @@ var addingProjBtn = function addingProjBtn() {
   projectsContainer.appendChild(newAddbtn);
   newAddbtn.addEventListener('click', function () {
     newAddbtn.className = 'd-none';
-    app.addProjFrm();
+    addProjFrm();
   });
 };
 
@@ -168,8 +168,8 @@ var Project = /*#__PURE__*/function () {
     }
   }, {
     key: "removeTodo",
-    value: function removeTodo(todoObj) {
-      return this.todos.splice(this.todos.indexOf[todoObj], 1);
+    value: function removeTodo(currentIndex) {
+      return this.todos.splice(currentIndex, 1);
     }
   }, {
     key: "updateProject",
@@ -254,9 +254,13 @@ _defineProperty(Project, "showTodos", function (project) {
     for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
       var todo = _step2.value;
       var todoItem = document.createElement('li');
-      todoItem.className = 'todoItem';
+      todoItem.classList.add("todoItem");
+      var todoDeleteBtn = document.createElement('button');
+      todoDeleteBtn.className = 'deleBtn';
+      todoDeleteBtn.id = "".concat(todo.title);
+      todoDeleteBtn.innerHTML = '❌';
       todoItem.innerHTML = todo.title;
-      todosList.innerHTML += todoItem.outerHTML;
+      todosList.append(todoItem, todoDeleteBtn);
     }
   } catch (err) {
     _iterator2.e(err);
@@ -275,7 +279,6 @@ _defineProperty(Project, "showTodos", function (project) {
     Project.addTodoFrm(project);
   });
   var todosListeners = document.querySelectorAll('.todoItem');
-  console.log(todosListeners);
 
   var _iterator3 = _createForOfIteratorHelper(todosListeners),
       _step3;
@@ -313,6 +316,13 @@ _defineProperty(Project, "showTodos", function (project) {
     _iterator3.f();
   }
 
+  var todoDeleteBtns = document.querySelectorAll('.deleBtn');
+  todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
+    todoDeleteBtn.addEventListener('click', function () {
+      project.removeTodo(currentIndex);
+      Project.showTodos(project);
+    });
+  });
   return todoScreen;
 });
 

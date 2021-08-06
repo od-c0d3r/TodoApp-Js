@@ -80,7 +80,7 @@ export const addingProjBtn = () => {
 
     newAddbtn.addEventListener('click', () => {
         newAddbtn.className = 'd-none'
-        app.addProjFrm();
+        addProjFrm();
     });
 };
 
