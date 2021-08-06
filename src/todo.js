@@ -6,8 +6,7 @@ export default class Todo {
         this.priority = priority;
     };
 
-
-    updateTodo(todo, detailsScreen){
+    static updateTodo(todo, detailsScreen){
         const form = document.createElement('form');
         const title = document.createElement('input');
         const des = document.createElement('input');
@@ -78,7 +77,7 @@ export default class Todo {
     
         updateBtn.addEventListener('click', ()=>{
             updateBtn.className = 'd-none'
-            updateTodo(todo, detailsScreen);
+            Todo.updateTodo(todo, detailsScreen);
         })
     }
 };
