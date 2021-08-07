@@ -3,7 +3,7 @@ import Project from './project';
 
 export const appStructureCaller = () => {
 
-    if (projects.length == 0) {
+    if (JSON.parse(localStorage.projects).length == 0) {
         new Project('Default');
     }
 
@@ -37,8 +37,8 @@ export const appStructureCaller = () => {
     main.innerHTML += containerFluid.outerHTML;
     document.body.appendChild(main);
 
-    Project.displayProjects(projects);
-    Project.showTodos(projects[0]);
+    Project.displayProjects( JSON.parse(localStorage.projects));
+    Project.showTodos(JSON.parse(localStorage.projects)[0]);
 
     return main
 }
@@ -46,7 +46,7 @@ export const appStructureCaller = () => {
 export const projectsEvents = () => {
     const projectsListeners = document.querySelectorAll('.projectItem');
     for (let projectHTML of projectsListeners) {
-        for (let projectObj of projects) {
+        for (let projectObj of JSON.parse(localStorage.projects)) {
             if (projectHTML.innerHTML === projectObj.name) {
                 projectHTML.addEventListener('click', () => Project.showTodos(projectObj));
             }
@@ -75,7 +75,7 @@ export const addProjFrm = () => {
         form.className = "d-none";
         btn.className = 'd-block'
 
-        Project.displayProjects(projects);
+        Project.displayProjects(JSON.parse(localStorage.projects));
         projectsEvents();
     });
 }

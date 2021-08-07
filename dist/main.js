@@ -25,7 +25,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 var appStructureCaller = function appStructureCaller() {
-  if (_project__WEBPACK_IMPORTED_MODULE_0__.projects.length == 0) {
+  if (JSON.parse(localStorage.projects).length == 0) {
     new _project__WEBPACK_IMPORTED_MODULE_0__.default('Default');
   }
 
@@ -53,8 +53,8 @@ var appStructureCaller = function appStructureCaller() {
   containerFluid.innerHTML += divContainer.outerHTML;
   main.innerHTML += containerFluid.outerHTML;
   document.body.appendChild(main);
-  _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(_project__WEBPACK_IMPORTED_MODULE_0__.projects);
-  _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(_project__WEBPACK_IMPORTED_MODULE_0__.projects[0]);
+  _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(JSON.parse(localStorage.projects));
+  _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(JSON.parse(localStorage.projects)[0]);
   return main;
 };
 var projectsEvents = function projectsEvents() {
@@ -67,7 +67,7 @@ var projectsEvents = function projectsEvents() {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var projectHTML = _step.value;
 
-      var _iterator2 = _createForOfIteratorHelper(_project__WEBPACK_IMPORTED_MODULE_0__.projects),
+      var _iterator2 = _createForOfIteratorHelper(JSON.parse(localStorage.projects)),
           _step2;
 
       try {
@@ -112,7 +112,7 @@ var addProjFrm = function addProjFrm() {
     var btn = document.getElementById('addProjBtn');
     form.className = "d-none";
     btn.className = 'd-block';
-    _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(_project__WEBPACK_IMPORTED_MODULE_0__.projects);
+    _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(JSON.parse(localStorage.projects));
     projectsEvents();
   });
 };
@@ -138,7 +138,6 @@ var addingProjBtn = function addingProjBtn() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "projects": () => (/* binding */ projects),
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
 /* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
@@ -159,7 +158,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var projects = [];
+
+if (typeof localStorage.projects == 'undefined') {
+  var projects = [];
+  new Project('Default');
+  localStorage.setItem("projects", JSON.stringify(projects));
+} else {
+  var projects = JSON.parse(localStorage.projects);
+  localStorage.setItem("projects", JSON.stringify(projects));
+}
 
 var Project = /*#__PURE__*/function () {
   function Project(name) {
@@ -168,6 +175,7 @@ var Project = /*#__PURE__*/function () {
     this.name = name;
     this.todos = [];
     projects.push(this);
+    localStorage.setItem("projects", JSON.stringify(projects));
   }
 
   _createClass(Project, [{
@@ -219,10 +227,9 @@ var Project = /*#__PURE__*/function () {
 
       ;
       var projectDeleteBtns = document.querySelectorAll('.projDelBtn');
-      console.log(projectDeleteBtns);
       projectDeleteBtns.forEach(function (projectDeleteBtn, index) {
         projectDeleteBtn.addEventListener('click', function () {
-          projects[index].deleteProject();
+          JSON.parse(localStorage.projects)[index].deleteProject();
           Project.displayProjects(projects);
           _app__WEBPACK_IMPORTED_MODULE_1__.projectsEvents();
           Project.showTodos(projects[index]);
@@ -256,6 +263,7 @@ _defineProperty(Project, "addTodoFrm", function (project) {
   btn.addEventListener('click', function () {
     var todo = new _todo__WEBPACK_IMPORTED_MODULE_0__.default(title.value, des.value, dueDate.value, priority.value);
     project.todos.push(todo);
+    localStorage.setItem("projects", JSON.stringify(projects));
     var btn = document.getElementById('addTodoBtn');
     form.className = "d-none";
     btn.className = 'd-block';
@@ -265,7 +273,6 @@ _defineProperty(Project, "addTodoFrm", function (project) {
 });
 
 _defineProperty(Project, "showTodos", function (project) {
-  console.log("showTodos()");
   var todoScreen = document.getElementById('todoScreen');
   todoScreen.innerHTML = "".concat(project.name, "'s Todos <br>");
   var todosList = document.createElement('ul');

@@ -1,13 +1,22 @@
 import Todo from './todo';
 import * as app from './app';
 
-export let projects = [];
+if (typeof(localStorage.projects) == 'undefined') {
+    var projects = [];
+    new Project('Default');
+    localStorage.setItem("projects", JSON.stringify(projects));
+} else {
+    var projects = JSON.parse(localStorage.projects);
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
+
 
 export default class Project {
     constructor(name) {
         this.name = name;
         this.todos = [];
         projects.push(this);
+        localStorage.setItem("projects", JSON.stringify(projects));
     };
 
     addTodo(todoObj) {
@@ -42,11 +51,10 @@ export default class Project {
         };
 
         const projectDeleteBtns = document.querySelectorAll('.projDelBtn');
-        console.log(projectDeleteBtns)
 
         projectDeleteBtns.forEach(function (projectDeleteBtn, index) {
             projectDeleteBtn.addEventListener('click', () => {
-                projects[index].deleteProject();
+                JSON.parse(localStorage.projects)[index].deleteProject();
                 Project.displayProjects(projects);
                 app.projectsEvents();
                 Project.showTodos(projects[index]);
@@ -84,11 +92,12 @@ export default class Project {
         btn.addEventListener('click', () => {
             let todo = new Todo(title.value, des.value, dueDate.value, priority.value);
             project.todos.push(todo);
+            localStorage.setItem("projects", JSON.stringify(projects));
 
             const btn = document.getElementById('addTodoBtn');
             form.className = "d-none";
             btn.className = 'd-block';
-
+            
             Project.showTodos(project);
         });
 
@@ -96,7 +105,6 @@ export default class Project {
     }
 
     static showTodos = (project) => {
-        console.log("showTodos()")
         const todoScreen = document.getElementById('todoScreen');
         todoScreen.innerHTML = `${project.name}'s Todos <br>`
         const todosList = document.createElement('ul');
