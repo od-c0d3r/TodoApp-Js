@@ -2,6 +2,11 @@ import { projects } from './project';
 import Project from './project';
 
 export const appStructureCaller = () => {
+
+    if (projects.length == 0) {
+        new Project('Default');
+    }
+
     const main = document.createElement('main');
     main.id = 'main';
     const containerFluid = document.createElement('div')
@@ -23,13 +28,17 @@ export const appStructureCaller = () => {
     todoScreen.id = 'todoScreen';
 
     const detailsScreen = document.createElement('div');
-    detailsScreen.classList = 'col bg-light p-0';
+    detailsScreen.classList = 'col bg-dark p-0';
+    detailsScreen.style = 'color:white;'
     detailsScreen.id = 'detailsScreen';
 
     divContainer.innerHTML += projectScreen.outerHTML + todoScreen.outerHTML + detailsScreen.outerHTML
     containerFluid.innerHTML += divContainer.outerHTML;
     main.innerHTML += containerFluid.outerHTML;
     document.body.appendChild(main);
+
+    Project.displayProjects(projects);
+    Project.showTodos(projects[0]);
 
     return main
 }
@@ -67,7 +76,7 @@ export const addProjFrm = () => {
         btn.className = 'd-block'
 
         Project.displayProjects(projects);
-        projectsEvents()
+        projectsEvents();
     });
 }
 
@@ -83,4 +92,3 @@ export const addingProjBtn = () => {
         addProjFrm();
     });
 };
-

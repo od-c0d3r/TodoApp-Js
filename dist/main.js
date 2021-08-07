@@ -25,6 +25,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 var appStructureCaller = function appStructureCaller() {
+  if (_project__WEBPACK_IMPORTED_MODULE_0__.projects.length == 0) {
+    new _project__WEBPACK_IMPORTED_MODULE_0__.default('Default');
+  }
+
   var main = document.createElement('main');
   main.id = 'main';
   var containerFluid = document.createElement('div');
@@ -42,12 +46,15 @@ var appStructureCaller = function appStructureCaller() {
   todoScreen.classList = 'col bg-danger p-0';
   todoScreen.id = 'todoScreen';
   var detailsScreen = document.createElement('div');
-  detailsScreen.classList = 'col bg-light p-0';
+  detailsScreen.classList = 'col bg-dark p-0';
+  detailsScreen.style = 'color:white;';
   detailsScreen.id = 'detailsScreen';
   divContainer.innerHTML += projectScreen.outerHTML + todoScreen.outerHTML + detailsScreen.outerHTML;
   containerFluid.innerHTML += divContainer.outerHTML;
   main.innerHTML += containerFluid.outerHTML;
   document.body.appendChild(main);
+  _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(_project__WEBPACK_IMPORTED_MODULE_0__.projects);
+  _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(_project__WEBPACK_IMPORTED_MODULE_0__.projects[0]);
   return main;
 };
 var projectsEvents = function projectsEvents() {
@@ -293,6 +300,7 @@ _defineProperty(Project, "showTodos", function (project) {
     newAddbtn2.className = 'd-none';
     Project.addTodoFrm(project);
   });
+  ;
   var todosListeners = document.querySelectorAll('.todoItem');
 
   var _iterator3 = _createForOfIteratorHelper(todosListeners),
@@ -332,10 +340,12 @@ _defineProperty(Project, "showTodos", function (project) {
   }
 
   var todoDeleteBtns = document.querySelectorAll('.deleBtn');
+  var detailsScreen = document.getElementById('detailsScreen');
   todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
     todoDeleteBtn.addEventListener('click', function () {
       project.removeTodo(currentIndex);
       Project.showTodos(project);
+      detailsScreen.innerHTML = '';
     });
   });
   return todoScreen;
@@ -410,7 +420,6 @@ var Todo = /*#__PURE__*/function () {
   }, {
     key: "showTodoDetails",
     value: function showTodoDetails(todo) {
-      console.log(todo);
       var detailsScreen = document.getElementById('detailsScreen');
       detailsScreen.innerHTML = '';
       var title = document.createElement('h3');
@@ -504,14 +513,8 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app */ "./src/app.js");
-/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
 
-
-
-var projectDefault = new _project__WEBPACK_IMPORTED_MODULE_1__.default('Default');
 _app__WEBPACK_IMPORTED_MODULE_0__.appStructureCaller();
-_project__WEBPACK_IMPORTED_MODULE_1__.default.displayProjects(_project__WEBPACK_IMPORTED_MODULE_1__.projects);
-_project__WEBPACK_IMPORTED_MODULE_1__.default.showTodos(projectDefault);
 _app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
 _app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents();
 })();

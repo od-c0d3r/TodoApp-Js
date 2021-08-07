@@ -118,12 +118,11 @@ export default class Project {
         newAddbtn2.id = "addTodoBtn"
 
         todoScreen.appendChild(newAddbtn2);
-
-
+        
         newAddbtn2.addEventListener('click', () => {
             newAddbtn2.className = 'd-none';
             Project.addTodoFrm(project);
-        });
+        });;
 
 
         const todosListeners = document.querySelectorAll('.todoItem');
@@ -137,11 +136,13 @@ export default class Project {
         }
 
         const todoDeleteBtns = document.querySelectorAll('.deleBtn');
+        const detailsScreen = document.getElementById('detailsScreen');
 
         todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
             todoDeleteBtn.addEventListener('click', () => {
                 project.removeTodo(currentIndex);
                 Project.showTodos(project);
+                detailsScreen.innerHTML = '';
             });
         });
 
