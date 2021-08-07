@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Project)
 /* harmony export */ });
 /* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo */ "./src/todo.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app */ "./src/app.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -148,6 +149,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var projects = [];
@@ -194,10 +196,13 @@ var Project = /*#__PURE__*/function () {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var project = _step.value;
           var projectItem = document.createElement('li');
+          var projectDelBtn = document.createElement('button');
+          projectDelBtn.className = 'projDelBtn';
+          projectDelBtn.innerHTML = '❌';
           projectItem.className = "project".concat(project.name);
           projectItem.className = 'projectItem';
           projectItem.innerHTML = project.name;
-          projectsList.innerHTML += projectItem.outerHTML;
+          projectsList.innerHTML += projectItem.outerHTML + projectDelBtn.outerHTML;
         }
       } catch (err) {
         _iterator.e(err);
@@ -206,6 +211,16 @@ var Project = /*#__PURE__*/function () {
       }
 
       ;
+      var projectDeleteBtns = document.querySelectorAll('.projDelBtn');
+      console.log(projectDeleteBtns);
+      projectDeleteBtns.forEach(function (projectDeleteBtn, index) {
+        projectDeleteBtn.addEventListener('click', function () {
+          projects[index].deleteProject();
+          Project.displayProjects(projects);
+          _app__WEBPACK_IMPORTED_MODULE_1__.projectsEvents();
+          Project.showTodos(projects[index]);
+        });
+      });
     }
   }]);
 
@@ -239,12 +254,13 @@ _defineProperty(Project, "addTodoFrm", function (project) {
     btn.className = 'd-block';
     Project.showTodos(project);
   });
+  return form;
 });
 
 _defineProperty(Project, "showTodos", function (project) {
   console.log("showTodos()");
   var todoScreen = document.getElementById('todoScreen');
-  todoScreen.innerHTML = "To Do's view<br>";
+  todoScreen.innerHTML = "".concat(project.name, "'s Todos <br>");
   var todosList = document.createElement('ul');
 
   var _iterator2 = _createForOfIteratorHelper(project.todos),
@@ -257,7 +273,6 @@ _defineProperty(Project, "showTodos", function (project) {
       todoItem.classList.add("todoItem");
       var todoDeleteBtn = document.createElement('button');
       todoDeleteBtn.className = 'deleBtn';
-      todoDeleteBtn.id = "".concat(todo.title);
       todoDeleteBtn.innerHTML = '❌';
       todoItem.innerHTML = todo.title;
       todosList.append(todoItem, todoDeleteBtn);
@@ -495,9 +510,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var projectDefault = new _project__WEBPACK_IMPORTED_MODULE_1__.default('Default');
 _app__WEBPACK_IMPORTED_MODULE_0__.appStructureCaller();
-_app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
 _project__WEBPACK_IMPORTED_MODULE_1__.default.displayProjects(_project__WEBPACK_IMPORTED_MODULE_1__.projects);
 _project__WEBPACK_IMPORTED_MODULE_1__.default.showTodos(projectDefault);
+_app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
 _app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents();
 })();
 
