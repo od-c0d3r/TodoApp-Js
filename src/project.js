@@ -22,8 +22,11 @@ export default class Project {
         return this.name = newName;
     };
 
-    deleteProject() {
-        return projects.splice(projects.indexOf(this), 1);
+    static deleteProject(index) {
+        let projects = JSON.parse(localStorage.projects);
+        projects.splice(index, 1);
+        localStorage.setItem("projects", JSON.stringify(projects));
+        return projects
     };
 
     static displayProjects(projects) {
@@ -45,10 +48,10 @@ export default class Project {
 
         projectDeleteBtns.forEach(function (projectDeleteBtn, index) {
             projectDeleteBtn.addEventListener('click', () => {
-                JSON.parse(localStorage.projects)[index].deleteProject();
-                Project.displayProjects(projects);
-                app.projectsEvents();
-                Project.showTodos(projects[index]);
+                Project.deleteProject(index);
+                Project.displayProjects(JSON.parse(localStorage.projects));
+                app.projectsEvents(JSON.parse(localStorage.projects));
+                Project.showTodos(JSON.parse(localStorage.projects)[index]);
             });
         });
     };
@@ -82,6 +85,7 @@ export default class Project {
 
         btn.addEventListener('click', () => {
             let todo = new Todo(title.value, des.value, dueDate.value, priority.value);
+            
             let index = 0;
             const projects = JSON.parse(localStorage.projects);
             projects.forEach( (obj, indx)=> {
@@ -91,13 +95,13 @@ export default class Project {
             });
 
             projects[index].todos.push(todo);
-
             localStorage.setItem("projects", JSON.stringify(projects));
+            
             const btn = document.getElementById('addTodoBtn');
             form.className = "d-none";
             btn.className = 'd-block';
     
-            Project.showTodos(projects[index]);
+            Project.showTodos(JSON.parse(localStorage.projects)[index]);
         });
 
         return form;

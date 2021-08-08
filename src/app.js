@@ -43,10 +43,10 @@ export const appStructureCaller = () => {
     return main
 }
 
-export const projectsEvents = () => {
+export const projectsEvents = (projects) => {
     const projectsListeners = document.querySelectorAll('.projectItem');
     for (let projectHTML of projectsListeners) {
-        for (let projectObj of JSON.parse(localStorage.projects)) {
+        for (let projectObj of projects) {
             if (projectHTML.innerHTML === projectObj.name) {
                 projectHTML.addEventListener('click', () => Project.showTodos(projectObj));
             }
@@ -76,7 +76,7 @@ export const addProjFrm = () => {
         btn.className = 'd-block'
 
         Project.displayProjects(JSON.parse(localStorage.projects));
-        projectsEvents();
+        projectsEvents(JSON.parse(localStorage.projects));
     });
 }
 

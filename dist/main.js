@@ -57,7 +57,7 @@ var appStructureCaller = function appStructureCaller() {
   _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(JSON.parse(localStorage.projects)[0]);
   return main;
 };
-var projectsEvents = function projectsEvents() {
+var projectsEvents = function projectsEvents(projects) {
   var projectsListeners = document.querySelectorAll('.projectItem');
 
   var _iterator = _createForOfIteratorHelper(projectsListeners),
@@ -67,7 +67,7 @@ var projectsEvents = function projectsEvents() {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var projectHTML = _step.value;
 
-      var _iterator2 = _createForOfIteratorHelper(JSON.parse(localStorage.projects)),
+      var _iterator2 = _createForOfIteratorHelper(projects),
           _step2;
 
       try {
@@ -113,7 +113,7 @@ var addProjFrm = function addProjFrm() {
     form.className = "d-none";
     btn.className = 'd-block';
     _project__WEBPACK_IMPORTED_MODULE_0__.default.displayProjects(JSON.parse(localStorage.projects));
-    projectsEvents();
+    projectsEvents(JSON.parse(localStorage.projects));
   });
 };
 var addingProjBtn = function addingProjBtn() {
@@ -185,12 +185,15 @@ var Project = /*#__PURE__*/function () {
     value: function updateProject(newName) {
       return this.name = newName;
     }
-  }, {
-    key: "deleteProject",
-    value: function deleteProject() {
-      return projects.splice(projects.indexOf(this), 1);
-    }
   }], [{
+    key: "deleteProject",
+    value: function deleteProject(index) {
+      var projects = JSON.parse(localStorage.projects);
+      projects.splice(index, 1);
+      localStorage.setItem("projects", JSON.stringify(projects));
+      return projects;
+    }
+  }, {
     key: "displayProjects",
     value: function displayProjects(projects) {
       var projectsList = document.getElementById('projectsList');
@@ -221,10 +224,10 @@ var Project = /*#__PURE__*/function () {
       var projectDeleteBtns = document.querySelectorAll('.projDelBtn');
       projectDeleteBtns.forEach(function (projectDeleteBtn, index) {
         projectDeleteBtn.addEventListener('click', function () {
-          JSON.parse(localStorage.projects)[index].deleteProject();
-          Project.displayProjects(projects);
-          _app__WEBPACK_IMPORTED_MODULE_1__.projectsEvents();
-          Project.showTodos(projects[index]);
+          Project.deleteProject(index);
+          Project.displayProjects(JSON.parse(localStorage.projects));
+          _app__WEBPACK_IMPORTED_MODULE_1__.projectsEvents(JSON.parse(localStorage.projects));
+          Project.showTodos(JSON.parse(localStorage.projects)[index]);
         });
       });
     }
@@ -266,7 +269,7 @@ _defineProperty(Project, "addTodoFrm", function (project) {
     var btn = document.getElementById('addTodoBtn');
     form.className = "d-none";
     btn.className = 'd-block';
-    Project.showTodos(projects[index]);
+    Project.showTodos(JSON.parse(localStorage.projects)[index]);
   });
   return form;
 });
@@ -558,7 +561,7 @@ if (typeof localStorage.projects == 'undefined') {
 
 _app__WEBPACK_IMPORTED_MODULE_0__.appStructureCaller();
 _app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
-_app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents();
+_app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents(JSON.parse(localStorage.projects));
 })();
 
 /******/ })()
