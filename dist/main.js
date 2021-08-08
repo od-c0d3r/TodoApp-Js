@@ -176,16 +176,18 @@ var Project = /*#__PURE__*/function () {
       return this.todos.push(todoObj);
     }
   }, {
-    key: "removeTodo",
-    value: function removeTodo(currentIndex) {
-      return this.todos.splice(currentIndex, 1);
-    }
-  }, {
     key: "updateProject",
     value: function updateProject(newName) {
       return this.name = newName;
     }
   }], [{
+    key: "removeTodo",
+    value: function removeTodo(index, currentIndex) {
+      var projects = JSON.parse(localStorage.projects);
+      projects[index].todos.splice(currentIndex, 1);
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+  }, {
     key: "deleteProject",
     value: function deleteProject(index) {
       var projects = JSON.parse(localStorage.projects);
@@ -352,10 +354,15 @@ _defineProperty(Project, "showTodos", function (project) {
   var detailsScreen = document.getElementById('detailsScreen');
   todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
     todoDeleteBtn.addEventListener('click', function () {
-      console.log(project);
-      console.log(JSON.parse(localStorage.projects));
-      project.removeTodo(currentIndex);
-      Project.showTodos(project);
+      var index = 0;
+      var projects = JSON.parse(localStorage.projects);
+      projects.forEach(function (obj, indx) {
+        if (project.name == obj.name) {
+          return index = indx;
+        }
+      });
+      Project.removeTodo(index, currentIndex);
+      Project.showTodos(JSON.parse(localStorage.projects)[index]);
       detailsScreen.innerHTML = '';
     });
   });

@@ -14,8 +14,10 @@ export default class Project {
         return this.todos.push(todoObj)
     };
 
-    removeTodo(currentIndex) {
-        return this.todos.splice(currentIndex, 1);
+    static removeTodo(index, currentIndex) {
+        let projects = JSON.parse(localStorage.projects);
+        projects[index].todos.splice(currentIndex, 1);
+        localStorage.setItem("projects", JSON.stringify(projects));
     };
 
     updateProject(newName) {
@@ -151,10 +153,17 @@ export default class Project {
 
         todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
             todoDeleteBtn.addEventListener('click', () => {
-                console.log(project);
-                console.log(JSON.parse(localStorage.projects))
-                project.removeTodo(currentIndex);
-                Project.showTodos(project);
+
+                let index = 0;
+                const projects = JSON.parse(localStorage.projects);
+                projects.forEach( (obj, indx)=> {
+                    if(project.name == obj.name) {
+                        return index = indx;
+                    }
+                });
+
+                Project.removeTodo(index, currentIndex);
+                Project.showTodos(JSON.parse(localStorage.projects)[index]);
                 detailsScreen.innerHTML = '';
             });
         });
