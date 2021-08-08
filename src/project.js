@@ -1,20 +1,11 @@
 import Todo from './todo';
 import * as app from './app';
 
-if (typeof(localStorage.projects) == 'undefined') {
-    var projects = [];
-    new Project('Default');
-    localStorage.setItem("projects", JSON.stringify(projects));
-} else {
-    var projects = JSON.parse(localStorage.projects);
-    localStorage.setItem("projects", JSON.stringify(projects));
-}
-
-
 export default class Project {
     constructor(name) {
         this.name = name;
         this.todos = [];
+        let projects = JSON.parse(localStorage.projects);
         projects.push(this);
         localStorage.setItem("projects", JSON.stringify(projects));
     };
@@ -93,7 +84,6 @@ export default class Project {
             let todo = new Todo(title.value, des.value, dueDate.value, priority.value);
             let index = 0;
             const projects = JSON.parse(localStorage.projects);
-            
             projects.forEach( (obj, indx)=> {
                 if(project.name == obj.name) {
                     return index = indx;
@@ -103,11 +93,10 @@ export default class Project {
             projects[index].todos.push(todo);
 
             localStorage.setItem("projects", JSON.stringify(projects));
-
             const btn = document.getElementById('addTodoBtn');
             form.className = "d-none";
             btn.className = 'd-block';
-            
+    
             Project.showTodos(projects[index]);
         });
 

@@ -159,21 +159,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-if (typeof localStorage.projects == 'undefined') {
-  var projects = [];
-  new Project('Default');
-  localStorage.setItem("projects", JSON.stringify(projects));
-} else {
-  var projects = JSON.parse(localStorage.projects);
-  localStorage.setItem("projects", JSON.stringify(projects));
-}
-
 var Project = /*#__PURE__*/function () {
   function Project(name) {
     _classCallCheck(this, Project);
 
     this.name = name;
     this.todos = [];
+    var projects = JSON.parse(localStorage.projects);
     projects.push(this);
     localStorage.setItem("projects", JSON.stringify(projects));
   }
@@ -529,6 +521,20 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app */ "./src/app.js");
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
+
+
+
+if (typeof localStorage.projects == 'undefined') {
+  var projects = [];
+  localStorage.setItem("projects", JSON.stringify(projects));
+  new _project__WEBPACK_IMPORTED_MODULE_1__.default('Default');
+  localStorage.setItem("projects", JSON.stringify(projects));
+} else {
+  var _projects = JSON.parse(localStorage.projects);
+
+  localStorage.setItem("projects", JSON.stringify(_projects));
+}
 
 _app__WEBPACK_IMPORTED_MODULE_0__.appStructureCaller();
 _app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
