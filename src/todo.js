@@ -1,3 +1,5 @@
+import Project from './project';
+
 export default class Todo {
     constructor(title, description, dueDate, priority) {
         this.title = title;
@@ -6,7 +8,7 @@ export default class Todo {
         this.priority = priority;
     };
 
-    static updateTodo(todo, detailsScreen) {
+    static updateTodo(todo, detailsScreen, project) {
         const form = document.createElement('form');
         const title = document.createElement('input');
         const des = document.createElement('input');
@@ -39,19 +41,41 @@ export default class Todo {
         detailsScreen.appendChild(form);
         
         btn.addEventListener('click', () => {
-            todo.title = title.value;
-            todo.description = des.value;
-            todo.dueDate = dueDate.value;
-            todo.priority = priority.value;
+            console.log(project)
 
-            const btn = document.getElementById('editBtn');
+            const projects = JSON.parse(localStorage.projects);
+            console.log(projects)
+
+            let index = 0;
+            projects.forEach( (obj, indx)=> {
+                if(project.name == obj.name) {
+                    return index = indx;
+                }
+            });
+            console.log(index)
+
+            let todoIndex = 0;
+            projects[index].todos.forEach( (obj, indx)=> {
+                if(todo.title == obj.title) {
+                    return todoIndex = indx;
+                }
+            });
+            console.log(todoIndex)
+
+            projects[index].todos[todoIndex].title = title.value;
+            projects[index].todos[todoIndex].description = des.value;
+            projects[index].todos[todoIndex].dueDate = dueDate.value;
+            projects[index].todos[todoIndex].priority = priority.value;
+
+            localStorage.setItem("projects", JSON.stringify(projects));
             form.className = "d-none";
 
-            Todo.showTodoDetails(todo);
+            Todo.showTodoDetails(projects[index].todos[todoIndex]);
+            Project.showTodos(projects[index]);
         });
     }
 
-    static showTodoDetails(todo) {
+    static showTodoDetails(todo, project) {
         const detailsScreen = document.getElementById('detailsScreen');
         detailsScreen.innerHTML = ''
 
@@ -74,8 +98,8 @@ export default class Todo {
         detailsScreen.append(title, description, dueDate, priority, updateBtn);
 
         updateBtn.addEventListener('click', () => {
-            updateBtn.className = 'd-none'
-            Todo.updateTodo(todo, detailsScreen);
-        })
+            updateBtn.className = 'd-none',
+            Todo.updateTodo(todo, detailsScreen, project);
+        });
     }
 };

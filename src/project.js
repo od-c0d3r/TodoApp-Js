@@ -137,7 +137,7 @@ export default class Project {
         for (let todoHTML of todosListeners) {
             for (let todoObj of project.todos) {
                 if (todoHTML.innerHTML === todoObj.title) {
-                    todoHTML.addEventListener('click', () => Todo.showTodoDetails(todoObj));
+                    todoHTML.addEventListener('click', () => Todo.showTodoDetails(todoObj, project));
                 }
             }
         }

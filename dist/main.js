@@ -325,7 +325,7 @@ _defineProperty(Project, "showTodos", function (project) {
 
           if (todoHTML.innerHTML === todoObj.title) {
             todoHTML.addEventListener('click', function () {
-              return _todo__WEBPACK_IMPORTED_MODULE_0__.default.showTodoDetails(todoObj);
+              return _todo__WEBPACK_IMPORTED_MODULE_0__.default.showTodoDetails(todoObj, project);
             });
           }
         };
@@ -374,11 +374,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Todo)
 /* harmony export */ });
+/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ "./src/project.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 var Todo = /*#__PURE__*/function () {
   function Todo(title, description, dueDate, priority) {
@@ -392,7 +395,7 @@ var Todo = /*#__PURE__*/function () {
 
   _createClass(Todo, null, [{
     key: "updateTodo",
-    value: function updateTodo(todo, detailsScreen) {
+    value: function updateTodo(todo, detailsScreen, project) {
       var form = document.createElement('form');
       var title = document.createElement('input');
       var des = document.createElement('input');
@@ -416,18 +419,36 @@ var Todo = /*#__PURE__*/function () {
       form.append(title, des, dueDate, priority, btn);
       detailsScreen.appendChild(form);
       btn.addEventListener('click', function () {
-        todo.title = title.value;
-        todo.description = des.value;
-        todo.dueDate = dueDate.value;
-        todo.priority = priority.value;
-        var btn = document.getElementById('editBtn');
+        console.log(project);
+        var projects = JSON.parse(localStorage.projects);
+        console.log(projects);
+        var index = 0;
+        projects.forEach(function (obj, indx) {
+          if (project.name == obj.name) {
+            return index = indx;
+          }
+        });
+        console.log(index);
+        var todoIndex = 0;
+        projects[index].todos.forEach(function (obj, indx) {
+          if (todo.title == obj.title) {
+            return todoIndex = indx;
+          }
+        });
+        console.log(todoIndex);
+        projects[index].todos[todoIndex].title = title.value;
+        projects[index].todos[todoIndex].description = des.value;
+        projects[index].todos[todoIndex].dueDate = dueDate.value;
+        projects[index].todos[todoIndex].priority = priority.value;
+        localStorage.setItem("projects", JSON.stringify(projects));
         form.className = "d-none";
-        Todo.showTodoDetails(todo);
+        Todo.showTodoDetails(projects[index].todos[todoIndex]);
+        _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(projects[index]);
       });
     }
   }, {
     key: "showTodoDetails",
-    value: function showTodoDetails(todo) {
+    value: function showTodoDetails(todo, project) {
       var detailsScreen = document.getElementById('detailsScreen');
       detailsScreen.innerHTML = '';
       var title = document.createElement('h3');
@@ -443,8 +464,7 @@ var Todo = /*#__PURE__*/function () {
       updateBtn.innerHTML = '✏️';
       detailsScreen.append(title, description, dueDate, priority, updateBtn);
       updateBtn.addEventListener('click', function () {
-        updateBtn.className = 'd-none';
-        Todo.updateTodo(todo, detailsScreen);
+        updateBtn.className = 'd-none', Todo.updateTodo(todo, detailsScreen, project);
       });
     }
   }]);
