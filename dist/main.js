@@ -262,12 +262,19 @@ _defineProperty(Project, "addTodoFrm", function (project) {
   todoScreen.appendChild(form);
   btn.addEventListener('click', function () {
     var todo = new _todo__WEBPACK_IMPORTED_MODULE_0__.default(title.value, des.value, dueDate.value, priority.value);
-    project.todos.push(todo);
+    var index = 0;
+    var projects = JSON.parse(localStorage.projects);
+    projects.forEach(function (obj, indx) {
+      if (project.name == obj.name) {
+        return index = indx;
+      }
+    });
+    projects[index].todos.push(todo);
     localStorage.setItem("projects", JSON.stringify(projects));
     var btn = document.getElementById('addTodoBtn');
     form.className = "d-none";
     btn.className = 'd-block';
-    Project.showTodos(project);
+    Project.showTodos(projects[index]);
   });
   return form;
 });
@@ -350,6 +357,8 @@ _defineProperty(Project, "showTodos", function (project) {
   var detailsScreen = document.getElementById('detailsScreen');
   todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
     todoDeleteBtn.addEventListener('click', function () {
+      console.log(project);
+      console.log(JSON.parse(localStorage.projects));
       project.removeTodo(currentIndex);
       Project.showTodos(project);
       detailsScreen.innerHTML = '';

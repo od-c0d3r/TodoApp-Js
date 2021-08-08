@@ -91,14 +91,24 @@ export default class Project {
 
         btn.addEventListener('click', () => {
             let todo = new Todo(title.value, des.value, dueDate.value, priority.value);
-            project.todos.push(todo);
+            let index = 0;
+            const projects = JSON.parse(localStorage.projects);
+            
+            projects.forEach( (obj, indx)=> {
+                if(project.name == obj.name) {
+                    return index = indx;
+                }
+            });
+
+            projects[index].todos.push(todo);
+
             localStorage.setItem("projects", JSON.stringify(projects));
 
             const btn = document.getElementById('addTodoBtn');
             form.className = "d-none";
             btn.className = 'd-block';
             
-            Project.showTodos(project);
+            Project.showTodos(projects[index]);
         });
 
         return form;
@@ -148,6 +158,8 @@ export default class Project {
 
         todoDeleteBtns.forEach(function (todoDeleteBtn, currentIndex) {
             todoDeleteBtn.addEventListener('click', () => {
+                console.log(project);
+                console.log(JSON.parse(localStorage.projects))
                 project.removeTodo(currentIndex);
                 Project.showTodos(project);
                 detailsScreen.innerHTML = '';
