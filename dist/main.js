@@ -115,7 +115,10 @@ var addTodoFrm = function addTodoFrm(project, fun) {
   var title = document.createElement('input');
   var des = document.createElement('input');
   var dueDate = document.createElement('input');
-  var priority = document.createElement('input');
+  var priority = document.createElement('select');
+  var priority1 = document.createElement('option');
+  var priority2 = document.createElement('option');
+  var priority3 = document.createElement('option');
   var btn = document.createElement('button');
   btn.innerHTML = 'Create';
   btn.setAttribute('type', 'button');
@@ -125,8 +128,13 @@ var addTodoFrm = function addTodoFrm(project, fun) {
   des.setAttribute('placeholder', 'Description');
   dueDate.setAttribute('type', 'date');
   dueDate.setAttribute('placeholder', 'Due Date');
-  priority.setAttribute('type', 'number');
-  priority.setAttribute('placeholder', 'Priority');
+  priority1.setAttribute('value', 'low');
+  priority2.setAttribute('value', 'medium');
+  priority3.setAttribute('value', 'high');
+  priority1.innerHTML = 'Low';
+  priority2.innerHTML = 'Medium';
+  priority3.innerHTML = 'High';
+  priority.innerHTML += priority1.outerHTML + priority2.outerHTML + priority3.outerHTML;
   form.append(title, des, dueDate, priority, btn);
   todoScreen.appendChild(form);
   btn.addEventListener('click', function () {

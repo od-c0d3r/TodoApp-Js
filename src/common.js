@@ -6,7 +6,12 @@ const addTodoFrm = (project, fun) => {
   const title = document.createElement('input');
   const des = document.createElement('input');
   const dueDate = document.createElement('input');
-  const priority = document.createElement('input');
+
+  const priority = document.createElement('select');
+  const priority1 = document.createElement('option');
+  const priority2 = document.createElement('option');
+  const priority3 = document.createElement('option');
+
   const btn = document.createElement('button');
 
   btn.innerHTML = 'Create';
@@ -21,9 +26,14 @@ const addTodoFrm = (project, fun) => {
   dueDate.setAttribute('type', 'date');
   dueDate.setAttribute('placeholder', 'Due Date');
 
-  priority.setAttribute('type', 'number');
-  priority.setAttribute('placeholder', 'Priority');
+  priority1.setAttribute('value', 'low');
+  priority2.setAttribute('value', 'medium');
+  priority3.setAttribute('value', 'high');
+  priority1.innerHTML = 'Low';
+  priority2.innerHTML = 'Medium';
+  priority3.innerHTML = 'High';
 
+  priority.innerHTML += priority1.outerHTML + priority2.outerHTML + priority3.outerHTML;
   form.append(title, des, dueDate, priority, btn);
 
   todoScreen.appendChild(form);

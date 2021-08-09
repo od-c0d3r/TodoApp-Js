@@ -23,6 +23,8 @@ Visit [Link](https://fr3elancer.github.io/todo-app/)
 # Getting Started 
 
 - Open your Terminal and Navigate to the project destination and type `npm install`
+- Run `npm run build`
+- You can now open the `index.html` file in `dist` folder in any browser.
 
 # Authors
 
