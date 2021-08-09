@@ -14,4 +14,4 @@ if (typeof(localStorage.projects) == 'undefined') {
 
 app.appStructureCaller();
 app.addingProjBtn();
-app.projectsEvents(JSON.parse(localStorage.projects));
+app.projectsEvents();

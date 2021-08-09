@@ -43,12 +43,15 @@ export const appStructureCaller = () => {
     return main
 }
 
-export const projectsEvents = (projects) => {
+export const projectsEvents = () => {
+    const projects = JSON.parse(localStorage.projects)
     const projectsListeners = document.querySelectorAll('.projectItem');
     for (let projectHTML of projectsListeners) {
         for (let projectObj of projects) {
             if (projectHTML.innerHTML === projectObj.name) {
-                projectHTML.addEventListener('click', () => Project.showTodos(projectObj));
+                projectHTML.addEventListener('click', () => {
+                    Project.showTodos(JSON.parse(localStorage.projects)[projects.indexOf(projectObj)]);
+                })
             }
         }
     }

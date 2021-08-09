@@ -57,7 +57,8 @@ var appStructureCaller = function appStructureCaller() {
   _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(JSON.parse(localStorage.projects)[0]);
   return main;
 };
-var projectsEvents = function projectsEvents(projects) {
+var projectsEvents = function projectsEvents() {
+  var projects = JSON.parse(localStorage.projects);
   var projectsListeners = document.querySelectorAll('.projectItem');
 
   var _iterator = _createForOfIteratorHelper(projectsListeners),
@@ -76,7 +77,7 @@ var projectsEvents = function projectsEvents(projects) {
 
           if (projectHTML.innerHTML === projectObj.name) {
             projectHTML.addEventListener('click', function () {
-              return _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(projectObj);
+              _project__WEBPACK_IMPORTED_MODULE_0__.default.showTodos(JSON.parse(localStorage.projects)[projects.indexOf(projectObj)]);
             });
           }
         };
@@ -568,7 +569,7 @@ if (typeof localStorage.projects == 'undefined') {
 
 _app__WEBPACK_IMPORTED_MODULE_0__.appStructureCaller();
 _app__WEBPACK_IMPORTED_MODULE_0__.addingProjBtn();
-_app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents(JSON.parse(localStorage.projects));
+_app__WEBPACK_IMPORTED_MODULE_0__.projectsEvents();
 })();
 
 /******/ })()
