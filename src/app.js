@@ -84,5 +84,5 @@ export const addingProjBtn = () => {
     addProjFrm();
   });
 
-  return projectsContainer
+  return projectsContainer;
 };

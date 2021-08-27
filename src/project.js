@@ -54,7 +54,7 @@ export default class Project {
       });
     });
 
-    return projectsList
+    return projectsList;
   }
 
   static projectsEvents = () => {
