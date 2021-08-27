@@ -3,7 +3,7 @@ import * as common from './common';
 
 export const appStructureCaller = () => {
   if (JSON.parse(localStorage.projects).length === 0) {
-    const newDefault = () => new Project('Default');
+    const newDefault = () => Project.saveToLocal(new Project('Default'));
     newDefault();
   }
 
@@ -60,7 +60,7 @@ export const addProjFrm = () => {
   projectsContainer.appendChild(form);
 
   btn.addEventListener('click', () => {
-    const project = () => new Project(input.value);
+    const project = () => Project.saveToLocal(new Project(input.value));
     project();
 
     const btn = document.getElementById('addProjBtn');
@@ -83,4 +83,6 @@ export const addingProjBtn = () => {
     newAddbtn.className = 'd-none';
     addProjFrm();
   });
+
+  return projectsContainer
 };
