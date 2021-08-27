@@ -26,6 +26,10 @@ Visit [Link](https://fr3elancer.github.io/todo-app/)
 - Run `npm run build`
 - You can now open the `index.html` file in `dist` folder in any browser.
 
+## For Testing
+
+- Run `npm run test`
+
 # Authors
 
 ### 👤 Omar R.
