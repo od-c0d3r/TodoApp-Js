@@ -4,8 +4,11 @@ export default class Project {
   constructor(name) {
     this.name = name;
     this.todos = [];
+  }
+
+  static saveToLocal(project) {
     const projects = JSON.parse(localStorage.projects);
-    projects.push(this);
+    projects.push(project);
     localStorage.setItem('projects', JSON.stringify(projects));
   }
 
@@ -50,6 +53,8 @@ export default class Project {
         common.showTodos(JSON.parse(localStorage.projects)[index]);
       });
     });
+
+    return projectsList
   }
 
   static projectsEvents = () => {
