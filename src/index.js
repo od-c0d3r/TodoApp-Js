@@ -4,7 +4,7 @@ import Project from './project';
 if (typeof (localStorage.projects) === 'undefined') {
   const projects = [];
   localStorage.setItem('projects', JSON.stringify(projects));
-  const newDefault = () => new Project('Default');
+  const newDefault = () => Project.saveToLocal(new Project('Default'));
   newDefault();
   localStorage.setItem('projects', JSON.stringify(projects));
 } else {
