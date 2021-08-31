@@ -142,7 +142,6 @@ projectDeleteBtns.forEach((projectDeleteBtn, index) => {
 //   fun(todo, detailsScreen, project, fun2);
 // });
 
-
 // app:addProjFrm
 // try {
 //   btn.addEventListener('click', () => {
@@ -159,7 +158,6 @@ projectDeleteBtns.forEach((projectDeleteBtn, index) => {
 // } catch (error) {
 //   return error;
 // }
-
 
 // app: addingProjBtn
 // newAddbtn.addEventListener('click', () => {
