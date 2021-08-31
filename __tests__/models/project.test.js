@@ -20,7 +20,7 @@ describe('Project Class tests suite', () => {
   it('adds a todo object to the project object todos variable', () => {
     const todo = new Todo('Todo');
     const actual = new Project('Homeworks');
-    actual.addTodo(todo)
+    actual.addTodo(todo);
     expect(actual.todos).toEqual([todo]);
   });
 
@@ -38,10 +38,9 @@ describe('Project Class tests suite', () => {
     expect(actual).toEqual([]);
   });
 
-  
   it('saves to localStorage', () => {
     const newProject = new Project('Homeworks');
-    const actual = Project.saveToLocal(newProject)
+    const actual = Project.saveToLocal(newProject);
     expect(actual).toContain(newProject);
   });
 

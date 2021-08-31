@@ -34,6 +34,24 @@ describe('Todo Class tests suite', () => {
     expect(actual.outerHTML).toMatch('<div id="todoScreen">Default\'s Todos <br><ul></ul><button id="addTodoBtn">➕</button></div>');
   });
 
+  it("shows add new todo form for a project's todo", () => {
+    const actual = common.addTodoFrm();
+    expect(actual.outerHTML).toMatch('<form><input type="text" placeholder="Title"><input type="text" placeholder="Description"><input type="date" placeholder="Due Date"><select><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select><button type="button">Create</button></form>');
+  });
+
+  it('shows a todo details', () => {
+    document.body.innerHTML = '<div id="detailsScreen"></div>';
+    const newTodo = {
+      title: 'Todo',
+      description: 'Desc',
+      dueDate: '12/12/2021',
+      priority: 'low',
+    };
+
+    const actual = common.showTodoDetails(newTodo);
+    expect(actual.outerHTML).toMatch('<div id="detailsScreen"><h3>Todo</h3><p><b>Description: </b>Desc <br></p><p><b>Due : </b>12/12/2021 <br></p><p><b>Priority : </b>low <br></p><button class="editBtn">✏️</button></div>');
+  });
+
   it("shows an update form for a project's todo", () => {
     document.body.innerHTML = '<div id="detailsScreen"></div>';
     const newTodo = {

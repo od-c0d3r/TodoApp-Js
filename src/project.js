@@ -1,5 +1,3 @@
-import * as common from './common';
-
 export default class Project {
   constructor(name) {
     this.name = name;
