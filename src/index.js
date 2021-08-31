@@ -141,3 +141,28 @@ projectDeleteBtns.forEach((projectDeleteBtn, index) => {
 //   // updateTodo
 //   fun(todo, detailsScreen, project, fun2);
 // });
+
+
+// app:addProjFrm
+// try {
+//   btn.addEventListener('click', () => {
+//     const project = () => Project.saveToLocal(new Project(input.value));
+//     project();
+
+//     const btn = document.getElementById('addProjBtn');
+//     form.className = 'd-none';
+//     btn.className = 'd-block';
+
+//     Project.displayProjects(JSON.parse(localStorage.projects));
+//     Project.projectsEvents(JSON.parse(localStorage.projects));
+//   });
+// } catch (error) {
+//   return error;
+// }
+
+
+// app: addingProjBtn
+// newAddbtn.addEventListener('click', () => {
+//   newAddbtn.className = 'd-none';
+//   addProjFrm();
+// });
