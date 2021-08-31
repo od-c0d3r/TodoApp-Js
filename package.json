@@ -4,16 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "twatch": "jest --watch",
-    "tcover": "jest --coverage",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress --mode=production",
     "watch": "webpack --progress --watch",
-    "server": "webpack-dev-server --open",
-    "start": "webpack serve --open"
-  },
-  "jest": {
-    "testEnvironment": "jest-environment-node"
+    "server": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",
@@ -33,13 +27,11 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
-    "jest": "^27.0.6",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^21.0.0",
     "stylelint-csstree-validator": "^1.9.0",
     "stylelint-scss": "^3.20.1",
     "webpack": "^5.47.1",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^4.0.0"
+    "webpack-cli": "^4.7.2"
   }
 }
