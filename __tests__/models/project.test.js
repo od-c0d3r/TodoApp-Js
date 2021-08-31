@@ -20,7 +20,8 @@ describe('Project Class tests suite', () => {
   it('adds a todo object to the project object todos variable', () => {
     const todo = new Todo('Todo');
     const actual = new Project('Homeworks');
-    expect(actual.addTodo(todo)).toBe(1);
+    actual.addTodo(todo)
+    expect(actual.todos).toEqual([todo]);
   });
 
   it('updates the project name', () => {
@@ -29,18 +30,19 @@ describe('Project Class tests suite', () => {
     expect(actual).toBe('newName');
   });
 
-  it('gets projects from localStorage', () => {
-    const projects = [];
-    const actual = Project.getFromLocal(projects);
-    expect(actual).toBe(projects);
-  });
-
   it('deletes a project from the array', () => {
     const projects = [];
     const newProject = new Project('Homeworks');
     projects.push(newProject);
     const actual = Project.deleteProject(0, projects);
     expect(actual).toEqual([]);
+  });
+
+  
+  it('saves to localStorage', () => {
+    const newProject = new Project('Homeworks');
+    const actual = Project.saveToLocal(newProject)
+    expect(actual).toContain(newProject);
   });
 
   it('displays the projects list', () => {
