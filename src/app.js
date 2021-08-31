@@ -1,12 +1,15 @@
-import Project from './project';
-import * as common from './common';
+// import Project from './project';
+// import * as common from './common';
 
 export const appStructureCaller = () => {
-  if (JSON.parse(localStorage.projects).length === 0) {
-    const newDefault = () => new Project('Default');
-    newDefault();
-  }
-
+  // try {
+  //   if (JSON.parse(localStorage.projects).length === 0) {
+  //     const newDefault = () => Project.saveToLocal(new Project('Default'));
+  //     newDefault();
+  //   }
+  // } catch (error) {
+  //   return error
+  // }
   const main = document.createElement('main');
   main.id = 'main';
   const containerFluid = document.createElement('div');
@@ -39,8 +42,8 @@ export const appStructureCaller = () => {
   main.innerHTML += containerFluid.outerHTML;
   document.body.appendChild(main);
 
-  Project.displayProjects(JSON.parse(localStorage.projects));
-  common.showTodos(JSON.parse(localStorage.projects)[0]);
+  // Project.displayProjects(JSON.parse(localStorage.projects));
+  // common.showTodos(JSON.parse(localStorage.projects)[0]);
 
   return main;
 };
@@ -59,17 +62,7 @@ export const addProjFrm = () => {
   form.append(input, btn);
   projectsContainer.appendChild(form);
 
-  btn.addEventListener('click', () => {
-    const project = () => new Project(input.value);
-    project();
-
-    const btn = document.getElementById('addProjBtn');
-    form.className = 'd-none';
-    btn.className = 'd-block';
-
-    Project.displayProjects(JSON.parse(localStorage.projects));
-    Project.projectsEvents(JSON.parse(localStorage.projects));
-  });
+  return form;
 };
 
 export const addingProjBtn = () => {
@@ -79,8 +72,5 @@ export const addingProjBtn = () => {
   const projectsContainer = document.getElementById('projectScreen');
   projectsContainer.appendChild(newAddbtn);
 
-  newAddbtn.addEventListener('click', () => {
-    newAddbtn.className = 'd-none';
-    addProjFrm();
-  });
+  return projectsContainer;
 };

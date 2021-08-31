@@ -1,6 +1,6 @@
-import Todo from './todo';
+// import Todo from './todo';
 
-const addTodoFrm = (project, fun) => {
+export const addTodoFrm = (/* project, fun */) => {
   const todoScreen = document.getElementById('todoScreen');
   const form = document.createElement('form');
   const title = document.createElement('input');
@@ -38,40 +38,15 @@ const addTodoFrm = (project, fun) => {
 
   todoScreen.appendChild(form);
 
-  btn.addEventListener('click', () => {
-    const todo = new Todo(title.value, des.value, dueDate.value, priority.value);
-
-    let index = 0;
-    const projects = JSON.parse(localStorage.projects);
-    projects.forEach((obj, indx) => {
-      if (project.name === obj.name) {
-        index = indx;
-        return index;
-      }
-      return index;
-    });
-
-    projects[index].todos.push(todo);
-    localStorage.setItem('projects', JSON.stringify(projects));
-
-    const btn = document.getElementById('addTodoBtn');
-    form.className = 'd-none';
-    btn.className = 'd-block';
-
-    // showTodos
-    fun(JSON.parse(localStorage.projects)[index]);
-  });
-
   return form;
 };
 
-const removeTodo = (index, currentIndex) => {
-  const projects = JSON.parse(localStorage.projects);
+export const removeTodo = (index, currentIndex, projects = JSON.parse(localStorage.projects)) => {
   projects[index].todos.splice(currentIndex, 1);
-  localStorage.setItem('projects', JSON.stringify(projects));
+  return projects;
 };
 
-const showTodoDetails = (todo, project, fun, fun2) => {
+export const showTodoDetails = (todo/* , project, fun, fun2 */) => {
   const detailsScreen = document.getElementById('detailsScreen');
   detailsScreen.innerHTML = '';
 
@@ -93,14 +68,10 @@ const showTodoDetails = (todo, project, fun, fun2) => {
 
   detailsScreen.append(title, description, dueDate, priority, updateBtn);
 
-  updateBtn.addEventListener('click', () => {
-    updateBtn.className = 'd-none';
-    // updateTodo
-    fun(todo, detailsScreen, project, fun2);
-  });
+  return detailsScreen;
 };
 
-export const updateTodo = (todo, detailsScreen, project, fun) => {
+export const updateTodo = (todo, detailsScreen = document.getElementById('detailsScreen')/* , project, fun */) => {
   const form = document.createElement('form');
   const title = document.createElement('input');
   const des = document.createElement('input');
@@ -132,39 +103,7 @@ export const updateTodo = (todo, detailsScreen, project, fun) => {
 
   detailsScreen.appendChild(form);
 
-  btn.addEventListener('click', () => {
-    const projects = JSON.parse(localStorage.projects);
-
-    let index = 0;
-    projects.forEach((obj, indx) => {
-      if (project.name === obj.name) {
-        index = indx;
-        return index;
-      }
-      return index;
-    });
-
-    let todoIndex = 0;
-    projects[index].todos.forEach((obj, indx) => {
-      if (todo.title === obj.title) {
-        todoIndex = indx;
-        return todoIndex;
-      }
-      return todoIndex;
-    });
-
-    projects[index].todos[todoIndex].title = title.value;
-    projects[index].todos[todoIndex].description = des.value;
-    projects[index].todos[todoIndex].dueDate = dueDate.value;
-    projects[index].todos[todoIndex].priority = priority.value;
-
-    localStorage.setItem('projects', JSON.stringify(projects));
-    form.className = 'd-none';
-
-    showTodoDetails(projects[index].todos[todoIndex], projects[index], updateTodo);
-    // showTodos
-    fun(projects[index]);
-  });
+  return form;
 };
 
 export const showTodos = (project) => {
@@ -189,42 +128,6 @@ export const showTodos = (project) => {
   newAddbtn2.id = 'addTodoBtn';
 
   todoScreen.appendChild(newAddbtn2);
-
-  newAddbtn2.addEventListener('click', () => {
-    newAddbtn2.className = 'd-none';
-    addTodoFrm(project, showTodos);
-  });
-
-  const todosListeners = document.querySelectorAll('.todoItem');
-
-  Object.keys(todosListeners).forEach((todoHTMLindex) => {
-    Object.keys(project.todos).forEach((todoObjindex) => {
-      if (todosListeners[todoHTMLindex].innerHTML === project.todos[todoObjindex].title) {
-        todosListeners[todoHTMLindex].addEventListener('click', () => showTodoDetails(project.todos[todoObjindex], project, updateTodo, showTodos));
-      }
-    });
-  });
-
-  const todoDeleteBtns = document.querySelectorAll('.deleBtn');
-  const detailsScreen = document.getElementById('detailsScreen');
-
-  todoDeleteBtns.forEach((todoDeleteBtn, currentIndex) => {
-    todoDeleteBtn.addEventListener('click', () => {
-      let index = 0;
-      const projects = JSON.parse(localStorage.projects);
-      projects.forEach((obj, indx) => {
-        if (project.name === obj.name) {
-          index = indx;
-          return index;
-        }
-        return index;
-      });
-
-      removeTodo(index, currentIndex);
-      showTodos(JSON.parse(localStorage.projects)[index]);
-      detailsScreen.innerHTML = '';
-    });
-  });
 
   return todoScreen;
 };
