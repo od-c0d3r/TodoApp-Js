@@ -190,41 +190,45 @@ export const showTodos = (project) => {
 
   todoScreen.appendChild(newAddbtn2);
 
-  newAddbtn2.addEventListener('click', () => {
-    newAddbtn2.className = 'd-none';
-    addTodoFrm(project, showTodos);
-  });
-
-  const todosListeners = document.querySelectorAll('.todoItem');
-
-  Object.keys(todosListeners).forEach((todoHTMLindex) => {
-    Object.keys(project.todos).forEach((todoObjindex) => {
-      if (todosListeners[todoHTMLindex].innerHTML === project.todos[todoObjindex].title) {
-        todosListeners[todoHTMLindex].addEventListener('click', () => showTodoDetails(project.todos[todoObjindex], project, updateTodo, showTodos));
-      }
+  try {
+    newAddbtn2.addEventListener('click', () => {
+      newAddbtn2.className = 'd-none';
+      addTodoFrm(project, showTodos);
     });
-  });
 
-  const todoDeleteBtns = document.querySelectorAll('.deleBtn');
-  const detailsScreen = document.getElementById('detailsScreen');
+    const todosListeners = document.querySelectorAll('.todoItem');
 
-  todoDeleteBtns.forEach((todoDeleteBtn, currentIndex) => {
-    todoDeleteBtn.addEventListener('click', () => {
-      let index = 0;
-      const projects = JSON.parse(localStorage.projects);
-      projects.forEach((obj, indx) => {
-        if (project.name === obj.name) {
-          index = indx;
-          return index;
+    Object.keys(todosListeners).forEach((todoHTMLindex) => {
+      Object.keys(project.todos).forEach((todoObjindex) => {
+        if (todosListeners[todoHTMLindex].innerHTML === project.todos[todoObjindex].title) {
+          todosListeners[todoHTMLindex].addEventListener('click', () => showTodoDetails(project.todos[todoObjindex], project, updateTodo, showTodos));
         }
-        return index;
       });
-
-      removeTodo(index, currentIndex);
-      showTodos(JSON.parse(localStorage.projects)[index]);
-      detailsScreen.innerHTML = '';
     });
-  });
+
+    const todoDeleteBtns = document.querySelectorAll('.deleBtn');
+    const detailsScreen = document.getElementById('detailsScreen');
+
+    todoDeleteBtns.forEach((todoDeleteBtn, currentIndex) => {
+      todoDeleteBtn.addEventListener('click', () => {
+        let index = 0;
+        const projects = JSON.parse(localStorage.projects);
+        projects.forEach((obj, indx) => {
+          if (project.name === obj.name) {
+            index = indx;
+            return index;
+          }
+          return index;
+        });
+
+        removeTodo(index, currentIndex);
+        showTodos(JSON.parse(localStorage.projects)[index]);
+        detailsScreen.innerHTML = '';
+      });
+    });
+  } catch (error) {
+    return error;
+  }
 
   return todoScreen;
 };

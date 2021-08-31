@@ -58,5 +58,4 @@ describe('Project Class tests suite', () => {
       '<ul id="projectsList">Projects List: <br><li class="projectItem">Default</li><button class="projDelBtn">❌</button></ul>',
     );
   });
-  
 });
