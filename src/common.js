@@ -65,10 +65,9 @@ const addTodoFrm = (project, fun) => {
   return form;
 };
 
-const removeTodo = (index, currentIndex) => {
-  const projects = JSON.parse(localStorage.projects);
+export const removeTodo = (index, currentIndex, projects = JSON.parse(localStorage.projects)) => {
   projects[index].todos.splice(currentIndex, 1);
-  localStorage.setItem('projects', JSON.stringify(projects));
+  return projects;
 };
 
 const showTodoDetails = (todo, project, fun, fun2) => {
@@ -100,7 +99,7 @@ const showTodoDetails = (todo, project, fun, fun2) => {
   });
 };
 
-export const updateTodo = (todo, detailsScreen, project, fun) => {
+export const updateTodo = (todo, detailsScreen = document.getElementById('detailsScreen'), project, fun) => {
   const form = document.createElement('form');
   const title = document.createElement('input');
   const des = document.createElement('input');
@@ -132,39 +131,44 @@ export const updateTodo = (todo, detailsScreen, project, fun) => {
 
   detailsScreen.appendChild(form);
 
-  btn.addEventListener('click', () => {
-    const projects = JSON.parse(localStorage.projects);
+  try {
+    btn.addEventListener('click', () => {
+      const projects = JSON.parse(localStorage.projects);
 
-    let index = 0;
-    projects.forEach((obj, indx) => {
-      if (project.name === obj.name) {
-        index = indx;
+      let index = 0;
+      projects.forEach((obj, indx) => {
+        if (project.name === obj.name) {
+          index = indx;
+          return index;
+        }
         return index;
-      }
-      return index;
-    });
+      });
 
-    let todoIndex = 0;
-    projects[index].todos.forEach((obj, indx) => {
-      if (todo.title === obj.title) {
-        todoIndex = indx;
+      let todoIndex = 0;
+      projects[index].todos.forEach((obj, indx) => {
+        if (todo.title === obj.title) {
+          todoIndex = indx;
+          return todoIndex;
+        }
         return todoIndex;
-      }
-      return todoIndex;
+      });
+
+      projects[index].todos[todoIndex].title = title.value;
+      projects[index].todos[todoIndex].description = des.value;
+      projects[index].todos[todoIndex].dueDate = dueDate.value;
+      projects[index].todos[todoIndex].priority = priority.value;
+
+      localStorage.setItem('projects', JSON.stringify(projects));
+      form.className = 'd-none';
+
+      showTodoDetails(projects[index].todos[todoIndex], projects[index], updateTodo);
+      // showTodos
+      fun(projects[index]);
     });
-
-    projects[index].todos[todoIndex].title = title.value;
-    projects[index].todos[todoIndex].description = des.value;
-    projects[index].todos[todoIndex].dueDate = dueDate.value;
-    projects[index].todos[todoIndex].priority = priority.value;
-
-    localStorage.setItem('projects', JSON.stringify(projects));
-    form.className = 'd-none';
-
-    showTodoDetails(projects[index].todos[todoIndex], projects[index], updateTodo);
-    // showTodos
-    fun(projects[index]);
-  });
+  } catch (error) {
+    return error;
+  }
+  return form;
 };
 
 export const showTodos = (project) => {

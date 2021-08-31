@@ -35,13 +35,6 @@ describe('Project Class tests suite', () => {
     expect(actual).toBe(projects);
   });
 
-  it.skip('saves a project to the localStorage', () => {
-    const projects = [];
-    const newProject = new Project('Homeworks');
-    const actual = Project.saveToLocal(newProject, projects);
-    expect(actual).toBe([newProject]);
-  });
-
   it('deletes a project from the array', () => {
     const projects = [];
     const newProject = new Project('Homeworks');
